@@ -1,0 +1,42 @@
+//Download Kalfa latest version, use below Link:
+https://mirrors.estointernet.in/apache/kafka/2.8.0/kafka_2.13-2.8.0.tgz
+
+store the kafka in c drive and rename the kafka folder to kafka
+
+// Some config changes, change log folder:
+Open kafka/config/server.properties
+search logs and change the path to custom Path
+log.dirs=C:/kafka/kafka-logs
+
+and also
+listeners=PLAINTEXT://localhost:9092
+
+Open kafka/config/zookeeper.properties
+change dataDir= to custom one
+
+
+
+
+You can start the Zookeeper and Kafka servers by using the below commands.
+Depending on your OS and your file path, run the below commands in new CMD's
+Start Zookeeper :
+$ .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+Start Kafka server:
+$ .\bin\windows\kafka-server-start.bat .\config\server.properties
+
+If u wish to Create Topic, dont create as this application will create it, it has a bean
+$ .\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test_topic  
+
+Deleting a topic:
+add a property in servers.property file:
+delete.topic.enable=true
+
+Now u can use below command
+$  .\bin\windows\kafka-topics.bat --delete  --zookeeper localhost:2181 --topic test_topic
+
+
+Common issues and resolution:
+If u find inconsistent cluster Id issue, then stop zookeeper, kafka server and delete all files inside 
+kafka-logs folder, kafka-zookeeper-data folder and logs folder, now restart zookeeper, then kafka-server
+
